@@ -17,7 +17,7 @@ patterns = [
 ]
 for name in filter(None, paths):
     path = pathlib.Path(name)
-    if any(part in {".local", ".build", "dist", "__pycache__"} for part in path.parts) or path.suffix in private_suffixes or path.name.startswith(".env"):
+    if any(part in {".local", ".build", "dist", "__pycache__"} for part in path.parts) or (path.suffix in private_suffixes and name != "assets/AppIcon.png") or path.name.startswith(".env"):
         failures.append((name, "non-source-file"))
         continue
     data = (root / path).read_bytes()

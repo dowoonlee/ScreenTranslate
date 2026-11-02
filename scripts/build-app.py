@@ -72,8 +72,11 @@ framework = app / "Contents/Frameworks/Sparkle.framework"
 shutil.copytree(framework_source, framework, symlinks=True)
 shutil.copy2(ROOT / ".build/artifacts/sparkle/Sparkle/LICENSE", app / "Contents/Resources/Sparkle-LICENSE.txt")
 
+shutil.copy2(ROOT / "assets/AppIcon.icns", app / "Contents/Resources/AppIcon.icns")
+
 info = {
     "CFBundleExecutable": "ScreenTranslate", "CFBundleIdentifier": "dev.screentranslate.app",
+    "CFBundleIconFile": "AppIcon",
     "CFBundleName": "ScreenTranslate", "CFBundleDisplayName": "ScreenTranslate", "CFBundlePackageType": "APPL",
     "CFBundleShortVersionString": release["version"], "CFBundleVersion": release["build"],
     "LSMinimumSystemVersion": "13.0", "LSUIElement": True, "NSHighResolutionCapable": True,

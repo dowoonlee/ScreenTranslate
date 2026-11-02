@@ -1,6 +1,6 @@
 # ScreenTranslate
 
-macOS에서 `⌘⇧2`로 선택한 화면을 한국어로 번역하는 Swift 메뉴 막대 앱입니다. 원본은 왼쪽, 번역 이미지는 오른쪽에 표시합니다.
+macOS에서 `⌘⇧2`로 선택한 화면을 한국어로 번역하는 Swift 메뉴 막대 앱입니다. 일반 캡처는 원본과 번역을 좌우로, 가로가 세로의 2.2배 이상인 긴 캡처는 원본을 위·번역을 아래로 표시합니다.
 
 ## 현재 배포 상태
 
@@ -17,7 +17,7 @@ macOS에서 `⌘⇧2`로 선택한 화면을 한국어로 번역하는 Swift 메
 3. 워크스페이스에 연결되지 않은 Claude 키는 **워크스페이스 ID**도 입력합니다.
 4. `⌘⇧2`를 누르고 화면 기록 권한을 허용한 뒤 필요하면 앱을 다시 실행합니다.
 5. 영역을 드래그합니다. Esc로 취소할 수 있습니다.
-6. 번역이 완료되면 원본·한국어 이미지가 나란히 표시됩니다. 결과 창은 다른 일반 창보다 위에 유지됩니다.
+6. 번역이 완료되면 이미지 비율에 맞춰 원본·한국어 이미지가 좌우 또는 위아래로 표시됩니다. 결과 창은 다른 일반 창보다 위에 유지됩니다.
 
 설정은 메뉴에서 직접 열 때만 표시됩니다. 캡처·번역 중에는 앱 창을 숨깁니다. 진행 상태·오류 확인과 취소는 메뉴 막대에서 할 수 있습니다. 결과 이미지를 복사하거나 PNG로 저장할 수 있고, 번역 텍스트도 따로 볼 수 있습니다.
 
@@ -58,3 +58,5 @@ CI용 서명 없는 빌드는 `./scripts/build-app.sh --mode unsigned`로 명시
 - [개인정보 처리](PRIVACY.md)
 
 [OpenAI 이미지 입력](https://developers.openai.com/api/docs/guides/images-vision) · [Claude 이미지 입력](https://platform.claude.com/docs/en/build-with-claude/vision) · [Sparkle](https://sparkle-project.org/documentation/)
+
+앱 아이콘은 `assets/AppIcon.icns`를 사용합니다. `swift scripts/generate-icon.swift`로 원본 PNG와 macOS 아이콘을 재생성할 수 있습니다.

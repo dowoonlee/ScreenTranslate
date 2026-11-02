@@ -311,17 +311,27 @@ struct ResultView: View {
             Divider()
             if let error = state.error { Text(error).foregroundStyle(.red).textSelection(.enabled).padding() }
             GeometryReader { proxy in
-                let columnWidth = max(1, (proxy.size.width - 49) / 2)
-                ScrollView([.horizontal, .vertical]) {
-                    HStack(alignment: .top, spacing: 16) {
-                        comparisonColumn(title: "원본", image: state.original, width: columnWidth,
-                                         placeholder: "⌘⇧2로 번역할 영역을 선택하세요.")
-                        Rectangle().fill(Color.secondary.opacity(0.2)).frame(width: 1)
-                        comparisonColumn(title: "한국어 번역", image: state.translated, width: columnWidth,
-                                         placeholder: state.busy ? "번역 중입니다…" : "번역 이미지가 여기에 표시됩니다.")
+                let imageSize = state.original?.size ?? .zero
+                let stacked = imageSize.width / max(1, imageSize.height) >= 2.2
+                let imageWidth = max(1, stacked ? proxy.size.width - 32 : (proxy.size.width - 65) / 2)
+                ScrollView(.vertical) {
+                    if stacked {
+                        VStack(alignment: .leading, spacing: 20) {
+                            comparisonColumn(title: "원본", image: state.original, width: imageWidth,
+                                             placeholder: "⌘⇧2로 번역할 영역을 선택하세요.")
+                            Divider()
+                            comparisonColumn(title: "한국어 번역", image: state.translated, width: imageWidth,
+                                             placeholder: state.busy ? "번역 중입니다…" : "번역 이미지가 여기에 표시됩니다.")
+                        }.padding(16)
+                    } else {
+                        HStack(alignment: .top, spacing: 16) {
+                            comparisonColumn(title: "원본", image: state.original, width: imageWidth,
+                                             placeholder: "⌘⇧2로 번역할 영역을 선택하세요.")
+                            Divider()
+                            comparisonColumn(title: "한국어 번역", image: state.translated, width: imageWidth,
+                                             placeholder: state.busy ? "번역 중입니다…" : "번역 이미지가 여기에 표시됩니다.")
+                        }.padding(16).frame(minHeight: proxy.size.height, alignment: .top)
                     }
-                    .padding(8)
-                    .frame(minHeight: proxy.size.height, alignment: .top)
                 }
             }.background(Color.black.opacity(0.04))
             if showText { ScrollView { Text(state.translationText).textSelection(.enabled).frame(maxWidth: .infinity, alignment: .leading).padding() }.frame(height: 160) }
@@ -340,7 +350,7 @@ struct ResultView: View {
             Text(title).font(.headline).padding(.horizontal, 4)
             if let image {
                 Image(nsImage: image).resizable().aspectRatio(contentMode: .fit)
-                    .frame(width: width)
+                    .frame(width: width, height: width * image.size.height / max(1, image.size.width))
                     .background(Color.white)
             } else {
                 VStack(spacing: 12) {

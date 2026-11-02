@@ -12,6 +12,8 @@ args = parser.parse_args()
 app = root / "dist/ScreenTranslate.app"
 with (app / "Contents/Info.plist").open("rb") as stream:
     info = plistlib.load(stream)
+assert info.get("CFBundleIconFile") == "AppIcon", "App icon not configured"
+assert (app / "Contents/Resources/AppIcon.icns").read_bytes()[:4] == b"icns", "App icon missing or invalid"
 for name in ["SUVerifyUpdateBeforeExtraction", "SURequireSignedFeed"]:
     assert info.get(name) is True, f"Required policy missing: {name}"
 for name in ["SUEnableAutomaticChecks", "SUAutomaticallyUpdate", "SUEnableSystemProfiling", "SUShowReleaseNotes"]:

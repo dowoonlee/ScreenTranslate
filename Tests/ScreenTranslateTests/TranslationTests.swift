@@ -81,6 +81,21 @@ final class TranslationTests: XCTestCase {
         XCTAssertEqual(NSApp.windows.count, count)
     }
 
+    func testComparisonImagesStayWithinBothBoundsWithoutUpscaling() {
+        let sizes = [CGSize(width: 200, height: 60), CGSize(width: 2000, height: 900), CGSize(width: 600, height: 2400)]
+        let panes = [CGSize(width: 1000, height: 180), CGSize(width: 450, height: 500)]
+        for size in sizes {
+            for pane in panes {
+                let result = ComparisonSizing.fit(size, inside: pane)
+                XCTAssertLessThanOrEqual(result.width, min(size.width, pane.width))
+                XCTAssertLessThanOrEqual(result.height, min(size.height, pane.height))
+                XCTAssertEqual(result.width / result.height, size.width / size.height, accuracy: 0.0001)
+            }
+        }
+        XCTAssertEqual(ComparisonSizing.fit(CGSize(width: 200, height: 60), inside: CGSize(width: 1000, height: 180)), CGSize(width: 200, height: 60))
+        XCTAssertEqual(ComparisonSizing.fit(.zero, inside: CGSize(width: 100, height: 100)), .zero)
+    }
+
     func testValidAndFencedTranslation() throws {
         let json = #"{"translations":[{"id":2,"text":"안녕하세요"},{"id":5,"text":"설정"}]}"#
         XCTAssertEqual(try TranslationPayload.parse(json, expectedIDs: [2, 5]).translations.count, 2)

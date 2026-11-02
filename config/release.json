@@ -1,6 +1,6 @@
 {
-  "version": "0.2.1",
-  "build": "21",
+  "version": "0.2.2",
+  "build": "22",
   "repository": "dowoonlee/ScreenTranslate",
   "feedURL": "https://raw.githubusercontent.com/dowoonlee/ScreenTranslate/main/docs/appcast.xml",
   "sparkleKeyAccount": "dev.screentranslate.updates",

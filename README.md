@@ -25,7 +25,7 @@ macOS에서 `⌘⇧2`로 선택한 화면을 한국어로 번역하는 Swift 메
 
 ## 업데이트
 
-메뉴 막대 또는 설정의 **업데이트 확인…** 버튼으로 새 버전을 확인하고 Sparkle의 안내에 따라 설치합니다. 자동 확인·자동 설치·시스템 프로파일 전송은 기본적으로 꺼져 있습니다.
+앱 시작 시 백그라운드에서 서명된 업데이트 목록을 확인합니다. 최신 버전이면 창을 표시하지 않고, 새 버전이 있으면 설치를 안내합니다. 메뉴 막대 또는 설정의 **업데이트 확인…** 버튼으로 직접 확인할 수도 있습니다. 업데이트 파일은 설치 전에 서명을 검증하며 자동 설치와 시스템 프로파일 전송은 꺼져 있습니다.
 
 업데이트 파일과 배포 목록은 전용 Ed25519 키로 서명합니다. 앱은 서명된 목록을 확인하고, 압축을 풀기 전에 파일 서명을 검증합니다. 개발용과 정식 배포는 다른 업데이트 목록을 사용합니다. 최초 개발용 다운로드는 Apple 공증 대상이 아니므로 일반 배포와 동일한 신뢰를 제공하지 않습니다.
 
@@ -60,3 +60,5 @@ CI용 서명 없는 빌드는 `./scripts/build-app.sh --mode unsigned`로 명시
 [OpenAI 이미지 입력](https://developers.openai.com/api/docs/guides/images-vision) · [Claude 이미지 입력](https://platform.claude.com/docs/en/build-with-claude/vision) · [Sparkle](https://sparkle-project.org/documentation/)
 
 앱 아이콘은 `assets/AppIcon.icns`를 사용합니다. `swift scripts/generate-icon.swift`로 원본 PNG와 macOS 아이콘을 재생성할 수 있습니다.
+
+원본·번역 이미지는 각각의 표시 공간에 가로·세로가 모두 들어가도록 축소합니다. 비교 이미지에 스크롤을 만들지 않으며 작은 캡처는 원본 크기 이상으로 확대하지 않습니다.

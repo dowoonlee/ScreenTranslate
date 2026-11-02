@@ -148,6 +148,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSMenuDelegate {
         state.hideWindows = { [weak self] in self?.settingsWindow?.orderOut(nil); self?.resultWindow?.orderOut(nil) }
         shortcut.action = { [weak self] in self?.state.capture() }
         do { try shortcut.register() } catch { state.error = error.localizedDescription }
+        updates.checkAtLaunch()
     }
 
     func applicationShouldSaveApplicationState(_ app: NSApplication) -> Bool { false }
@@ -310,30 +311,28 @@ struct ResultView: View {
             }.padding()
             Divider()
             if let error = state.error { Text(error).foregroundStyle(.red).textSelection(.enabled).padding() }
-            GeometryReader { proxy in
+            Group {
                 let imageSize = state.original?.size ?? .zero
                 let stacked = imageSize.width / max(1, imageSize.height) >= 2.2
-                let imageWidth = max(1, stacked ? proxy.size.width - 32 : (proxy.size.width - 65) / 2)
-                ScrollView(.vertical) {
-                    if stacked {
-                        VStack(alignment: .leading, spacing: 20) {
-                            comparisonColumn(title: "원본", image: state.original, width: imageWidth,
-                                             placeholder: "⌘⇧2로 번역할 영역을 선택하세요.")
-                            Divider()
-                            comparisonColumn(title: "한국어 번역", image: state.translated, width: imageWidth,
-                                             placeholder: state.busy ? "번역 중입니다…" : "번역 이미지가 여기에 표시됩니다.")
-                        }.padding(16)
-                    } else {
-                        HStack(alignment: .top, spacing: 16) {
-                            comparisonColumn(title: "원본", image: state.original, width: imageWidth,
-                                             placeholder: "⌘⇧2로 번역할 영역을 선택하세요.")
-                            Divider()
-                            comparisonColumn(title: "한국어 번역", image: state.translated, width: imageWidth,
-                                             placeholder: state.busy ? "번역 중입니다…" : "번역 이미지가 여기에 표시됩니다.")
-                        }.padding(16).frame(minHeight: proxy.size.height, alignment: .top)
+                if stacked {
+                    VStack(spacing: 16) {
+                        comparisonPanel(title: "원본", image: state.original,
+                                        placeholder: "⌘⇧2로 번역할 영역을 선택하세요.")
+                        Divider()
+                        comparisonPanel(title: "한국어 번역", image: state.translated,
+                                        placeholder: state.busy ? "번역 중입니다…" : "번역 이미지가 여기에 표시됩니다.")
+                    }
+                } else {
+                    HStack(spacing: 16) {
+                        comparisonPanel(title: "원본", image: state.original,
+                                        placeholder: "⌘⇧2로 번역할 영역을 선택하세요.")
+                        Divider()
+                        comparisonPanel(title: "한국어 번역", image: state.translated,
+                                        placeholder: state.busy ? "번역 중입니다…" : "번역 이미지가 여기에 표시됩니다.")
                     }
                 }
-            }.background(Color.black.opacity(0.04))
+            }.padding(16).frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color.black.opacity(0.04))
             if showText { ScrollView { Text(state.translationText).textSelection(.enabled).frame(maxWidth: .infinity, alignment: .leading).padding() }.frame(height: 160) }
             Divider()
             HStack {
@@ -345,20 +344,32 @@ struct ResultView: View {
         }.frame(minWidth: 720, minHeight: 440)
     }
 
-    private func comparisonColumn(title: String, image: NSImage?, width: CGFloat, placeholder: String) -> some View {
-        VStack(alignment: .leading, spacing: 12) {
-            Text(title).font(.headline).padding(.horizontal, 4)
-            if let image {
-                Image(nsImage: image).resizable().aspectRatio(contentMode: .fit)
-                    .frame(width: width, height: width * image.size.height / max(1, image.size.width))
-                    .background(Color.white)
-            } else {
-                VStack(spacing: 12) {
-                    Image(systemName: "viewfinder").font(.system(size: 32)).foregroundStyle(.secondary)
-                    Text(placeholder).foregroundStyle(.secondary).multilineTextAlignment(.center)
-                }.frame(width: width, height: 240)
+    private func comparisonPanel(title: String, image: NSImage?, placeholder: String) -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(title).font(.headline).frame(height: 20).padding(.horizontal, 4)
+            GeometryReader { proxy in
+                if let image {
+                    let fitted = ComparisonSizing.fit(image.size, inside: proxy.size)
+                    Image(nsImage: image).resizable()
+                        .frame(width: fitted.width, height: fitted.height)
+                        .background(Color.white)
+                        .frame(width: proxy.size.width, height: proxy.size.height)
+                } else {
+                    VStack(spacing: 12) {
+                        Image(systemName: "viewfinder").font(.system(size: 32)).foregroundStyle(.secondary)
+                        Text(placeholder).foregroundStyle(.secondary).multilineTextAlignment(.center)
+                    }.frame(maxWidth: .infinity, maxHeight: .infinity)
+                }
             }
-        }.frame(width: width, alignment: .topLeading)
+        }.frame(maxWidth: .infinity, maxHeight: .infinity)
     }
+}
 
+/// Preserve aspect ratio, fit both axes, and never enlarge small captures.
+enum ComparisonSizing {
+    static func fit(_ image: CGSize, inside available: CGSize) -> CGSize {
+        guard image.width > 0, image.height > 0, available.width > 0, available.height > 0 else { return .zero }
+        let scale = min(1, available.width / image.width, available.height / image.height)
+        return CGSize(width: image.width * scale, height: image.height * scale)
+    }
 }

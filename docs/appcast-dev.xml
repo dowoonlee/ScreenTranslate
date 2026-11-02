@@ -6,6 +6,15 @@ IMPORTANT: This file was signed by Sparkle. Any modifications to this file requi
     <channel>
         <title>ScreenTranslate</title>
         <item>
+            <title>0.2.2</title>
+            <pubDate>Mon, 02 Nov 2026 20:53:04 +0900</pubDate>
+            <link>https://github.com/dowoonlee/ScreenTranslate/releases/tag/v0.2.2-preview.1</link>
+            <sparkle:version>22</sparkle:version>
+            <sparkle:shortVersionString>0.2.2</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/dowoonlee/ScreenTranslate/releases/download/v0.2.2-preview.1/ScreenTranslate-0.2.2-universal.zip" length="2481473" type="application/octet-stream" sparkle:edSignature="AiBachlwY01vYCbB7kpl7F5u57M8CRKfBxoIofcuafh3ymNZ/Elaxjk7d2I+mCaZwWtxfRehkNOjg5DuhpcTBg=="/>
+        </item>
+        <item>
             <title>0.2.1</title>
             <pubDate>Mon, 02 Nov 2026 20:39:16 +0900</pubDate>
             <link>https://github.com/dowoonlee/ScreenTranslate/releases/tag/v0.2.1-preview.1</link>
@@ -26,6 +35,6 @@ IMPORTANT: This file was signed by Sparkle. Any modifications to this file requi
     </channel>
 </rss>
 <!-- sparkle-signatures:
-edSignature: gNll5imgLVME1/uEXzkBhlUnjhas0iNE0LqL7zdeQWzAz1hkuLFGeFc8e8Ep0SSLn5UjI0XzCO3vrf6FMlkMAg==
-length: 1913
+edSignature: dsNoNHnMViQBo0yQii5Ehr9TaGM2mr9PH0QGbNQlPj5u2qKNeq/5WRr2A5Uh/WcPl8zsziTUS1bzuGIVTwZ1AQ==
+length: 2650
 -->

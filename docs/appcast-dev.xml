@@ -1,0 +1,19 @@
+<?xml version="1.0" standalone="yes"?><!-- sparkle-sign-warning:
+IMPORTANT: This file was signed by Sparkle. Any modifications to this file requires re-signing this file with generate_appcast or sign_update! The signed signature will be embedded at the end of this file.
+--><rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
+    <channel>
+        <title>ScreenTranslate</title>
+        <item>
+            <title>0.2.0</title>
+            <pubDate>Mon, 02 Nov 2026 20:07:20 +0900</pubDate>
+            <link>https://github.com/dowoonlee/ScreenTranslate/releases/tag/v0.2.0-preview.1</link>
+            <sparkle:version>20</sparkle:version>
+            <sparkle:shortVersionString>0.2.0</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/dowoonlee/ScreenTranslate/releases/download/v0.2.0-preview.1/ScreenTranslate-0.2.0-universal.zip" length="1392991" type="application/octet-stream" sparkle:edSignature="oRg7wpTaUNEQnoyOSt3gpLjFrXe6UIB9Ow7LOTq31nFVxTAnkHMT8ghubNmAWrxOeEdAU8wDVL0tXp7PDW2OCg=="></enclosure>
+        </item>
+    </channel>
+</rss><!-- sparkle-signatures:
+edSignature: 7JZGfSuPDnfHk0DJDsTdMRWEtcPlNJleGx6wSi0P8acJ+kRng/qJQftNz74+yz+OW6bKk7W2EMIlAW7O91vxBg==
+length: 1184
+-->
